@@ -1,4 +1,89 @@
 let mainArea = document.querySelector("main")
+let block = document.querySelectorAll(".block")
+let userToken = "O"
+let computerToken = "X"
+let activePlayer = "O"
+let blockArr = []
+let gameStatus = "in progress"
+let tttContainer = document.querySelector("#tictactoe")
+
+let moveEvent = (evt) => {
+  if (gameStatus === "in progress") {
+    evt.target.innerText = "O"
+    wins()
+    activePlayer = computerToken
+  }
+  if (gameStatus === "in progress") {
+    window.setTimeout(() => {
+      computerMove()
+      wins()
+      activePlayer = userToken
+    }, 500)
+  }
+}
+
+block.forEach((b) => {
+  blockArr.push(b)
+  b.addEventListener("click", moveEvent)
+})
+
+let computerMove = () => {
+  let randomBlock = block[Math.floor(Math.random() * block.length )]
+  if (randomBlock.innerText === "") {
+    randomBlock.innerText = "X"
+  }
+  else {
+    computerMove()
+  }
+}
+
+let winCombos = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]
+
+let checkWin = (b1, b2, b3) => {
+  if (b1 !== "" && b1 === b2 && b1 === b3) {
+    return true
+  } else {
+    return false
+  }
+}
+
+let wins = () => {
+  let foundWinner = false
+  winCombos.forEach((win) => {
+    if (checkWin(blockArr[win[0]].innerText, blockArr[win[1]].innerText, blockArr[win[2]].innerText)) {
+      foundWinner = true
+    } 
+  })
+  if (foundWinner) {
+    let message = ''
+    gameStatus = "over"
+
+    if (activePlayer === userToken) {
+      message = "You have won!"
+    } else {
+      message = "The computer has won."
+    }
+
+    let winDisplay = document.createElement("h2")
+    winDisplay.innerText = message
+    tttContainer.append(winDisplay)
+  } else if (!blockArr.find((block) => { return block.innerText === "" })) {
+    message = "This is a draw!"
+    gameStatus = "over"
+
+    let winDisplay = document.createElement("h2")
+    winDisplay.innerText = `${message}`
+    tttContainer.append(winDisplay)
+  }
+}
+
+
+
+// -------------------------------------------------------
+
+
+
+
 let wordArea = document.querySelector(".word-display")
 let userGuess = document.querySelector(".user-guess")
 let gameDisplay = document.querySelector(".game-display")
@@ -11,7 +96,7 @@ let gameDisplay = document.querySelector(".game-display")
 // 5. repeat until strikes count down or full word -- check
 // 6. display letters previously chosen -- check
 // 7. work on hangman display
-// 8. work on separating winning or losing from event listener
+// 8. work on separating winning or losing from event listener -- make a gameplay function
 
 
 let words = ["hunger", "dangerous", "happy", "cat", "dictionary"]
@@ -72,7 +157,6 @@ let userGuessHTML = () => {
 
   userGuessForm.addEventListener("submit", (evt) => {
     evt.preventDefault()
-    let guesses = document.querySelector(".wrong-guesses")
 
     if (strikes > 0 && dashes.includes("_")) {
       let userInput = evt.target.guess.value
@@ -91,7 +175,6 @@ let userGuessHTML = () => {
         indexArr.forEach((index) => { newDashes[index] = userInput })
 
         dashes = newDashes.join(" ")
-        console.log(dashes)
       }
       else {
         wrongGuesses.push(` ${userInput}`)
@@ -101,25 +184,22 @@ let userGuessHTML = () => {
       renderGameDisplay()
       renderDashes()
       evt.target.reset()
-      return dashes
-    }
-    else if (strikes === 0) {
-      renderGameDisplay()
-      renderDashes()
-      window.alert("You've lost!")
-      // remove event listener and say you've lost the game -- get this outside of the submit event
-    }
-    else {
-      renderGameDisplay()
-      renderDashes()
-      window.alert("You've won!")
-      // remove event listener and say you've won the game -- get this outside of the submit event
+      // change strikes/word before dropdown
+      // set timer for windowalert
+      if (strikes === 0) {
+        let winDisplay = document.createElement("h2")
+        winDisplay.innerText = "You've lost!"
+        gameDisplay.append(winDisplay)
+      } else if (!dashes.includes("_")) {
+        let winDisplay = document.createElement("h2")
+        winDisplay.innerText = "You've won!"
+        gameDisplay.append(winDisplay)
+      }
     }
   })  
 }
 
 let chosenWord = chooseWord()
-console.log(chosenWord)
 let dashes = turnWordToDashes()
 renderGameDisplay()
 renderDashes()
