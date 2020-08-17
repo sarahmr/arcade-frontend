@@ -3,17 +3,33 @@
 <head>
   <title>Arcade</title>
   <script defer src="index.js"></script>
+  <link rel="stylesheet" href="main.css" />
 </head>
 <body>
   <main>
-    <div class="game-display">
-
+    <!-- tic tac toe setup -->
+    <div class="container" id="tictactoe">
+      <h1>Tic Tac Toe</h1>
+      <div class="game-area">
+        <div id="block-0" class="block"></div>
+        <div id="block-1" class="block"></div>
+        <div id="block-2" class="block"></div>
+        <div id="block-3" class="block"></div>
+        <div id="block-4" class="block"></div>
+        <div id="block-5" class="block"></div>
+        <div id="block-6" class="block"></div>
+        <div id="block-7" class="block"></div>
+        <div id="block-8" class="block"></div>
+      </div>
     </div>
-    <div class="word-display">
-
-    </div>
-    <div class="user-guess">
-
+    <!-- hangman setup -->
+    <div id="hangman">
+      <div class="game-display">
+      </div>
+      <div class="word-display">
+      </div>
+      <div class="user-guess">
+      </div>
     </div>
   </main>
 </body>
