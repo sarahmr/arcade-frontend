@@ -6,31 +6,48 @@
   <link rel="stylesheet" href="main.css" />
 </head>
 <body>
-  <main>
+    <!-- log in view -->
+  <div class="login-view">
+    <h1 class="first-welcome">Welcome to Arcade</h1>
+    <div class="button-area">
+      <p class="first-welcome">Please sign in or register.</p>
+      <button class="login">Sign In</button>
+      <button class="register">Register</button>
+    </div>
+  </div>
+    <!-- after log in -->
+  <div class="main-container" >
+    <div class="sidebar">
+
+    </div>
+    <div class="game-container">
+
+    </div>
+  </div>
     <!-- tic tac toe setup -->
-    <div class="container" id="tictactoe">
-      <h1>Tic Tac Toe</h1>
-      <div class="game-area">
-        <div id="block-0" class="block"></div>
-        <div id="block-1" class="block"></div>
-        <div id="block-2" class="block"></div>
-        <div id="block-3" class="block"></div>
-        <div id="block-4" class="block"></div>
-        <div id="block-5" class="block"></div>
-        <div id="block-6" class="block"></div>
-        <div id="block-7" class="block"></div>
-        <div id="block-8" class="block"></div>
-      </div>
+  <div class="ttt-container" id="tictactoe">
+    <h1 class="ttt-name">Tic Tac Toe</h1>
+    <div class="ttt-game-area">
+      <div id="block-0" class="block"></div>
+      <div id="block-1" class="block"></div>
+      <div id="block-2" class="block"></div>
+      <div id="block-3" class="block"></div>
+      <div id="block-4" class="block"></div>
+      <div id="block-5" class="block"></div>
+      <div id="block-6" class="block"></div>
+      <div id="block-7" class="block"></div>
+      <div id="block-8" class="block"></div>
     </div>
+  </div>
     <!-- hangman setup -->
-    <div id="hangman">
-      <div class="game-display">
-      </div>
-      <div class="word-display">
-      </div>
-      <div class="user-guess">
-      </div>
+  <div class="escape-container" id="escape">
+    <h1 class="escape-name">Escape the Shark! (A Word Game)</h1>
+    <div class="shark-game-display">
     </div>
-  </main>
+    <div class="word-display">
+    </div>
+    <div class="user-guess">
+    </div>
+  </div>
 </body>
 </html>
