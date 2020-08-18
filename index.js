@@ -11,6 +11,19 @@ let gameContainer = document.querySelector(".game-container")
 let gameArr = []
 let currentUser = {}
 
+let leaderBoard = document.querySelector(".leaderboard")
+let leadersArr =[]
+let leaderTable = document.querySelector(".site-leaders")
+
+let userStats = document.querySelector(".user-stats")
+let statsTable = document.querySelector(".stats-table")
+
+let gameLeaderBoard = document.querySelector(".game-leaderboard")
+let gameLeaderTable = document.querySelector(".game-leaders")
+let gameLeaders = []
+
+let favoritesDisplay = document.querySelector(".favorites")
+
 let block = document.querySelectorAll(".block")
 let userToken = "O"
 let computerToken = "X"
@@ -149,12 +162,39 @@ let renderSidebar = (userObj) => {
   logoutButton.innerText = "Log Out"
 
   sidebar.append(appName, userWelcome, statsButton, leaderboardButton, favoritesButton, logoutButton)
+
+  leaderboardButton.addEventListener("click", (evt) => {
+    gameContainer.innerHTML = ""
+
+    renderLeaderboard()
+    gameContainer.append(leaderBoard)
+    leaderBoard.style.display = "flex"
+  })
+
+  appName.addEventListener("click", (evt) => {
+    gameContainer.innerHTML = ""
+    gamesFetch()
+  })
+
+
+  statsButton.addEventListener("click", (evt) => {
+    gameContainer.innerHTML = ""
+
+    gameContainer.append(userStats)
+
+    let tableTitle = document.createElement("h2")
+    tableTitle.innerText = `${currentUser.name}'s Stats`
+    userStats.prepend(tableTitle)
+
+    userStats.style.display = "flex"
+    renderStats()
+  })
 }
 
 
 // ------- Game Card View ------------------------------------
 
-let gamesFetch = (user) => {
+let gamesFetch = () => {
   fetch("http://localhost:3000/games")
   .then(res => res.json())
   .then((gameObjArr) => {
@@ -210,46 +250,151 @@ let gameCardsHTML = (gameObj) => {
     }
   })
 
+  let game = gameObj
+
+  gameLeaderboardButton.addEventListener("click", (evt) => {
+    gameContainer.innerHTML = ""
+
+    gameContainer.append(gameLeaderBoard)
+    renderGameLeaders(game)
+    gameLeaderBoard.style.display = "flex"
+  })
 }
 
 // ---------------- RENDER LEADERBOARD ---------------------------
 
-// clear game container
-// render leaderboard area (ordered list of users)
-// fetch top ten users
-// serializer here, need play sessions and user name
-// display user name and number of games won
+let renderLeaderboard = () => {
+  fetchPS()
+}
 
+let fetchPS = () => {
+  fetch("http://localhost:3000/users/leaderboard")
+  .then(res => res.json())
+  .then((leaderObjArr) => {
+    leadersArr = leaderObjArr
+    leadersArr.forEach((leader) => {
+      leadersHTML(leader)
+    })
+  }) 
+}
 
+let leadersHTML = (leaderObj) => {
+  let leaderTableRow = document.createElement("tr")
 
+  let placeData = document.createElement("td")
+  placeData.innerText = leadersArr.indexOf(leaderObj) + 1
 
+  let nameData = document.createElement("td")
+  nameData.innerText = leaderObj.name
 
+  let winData = document.createElement("td")
+  winData.innerText = leaderObj.wins
 
+  leaderTableRow.append(placeData, nameData, winData)
+
+  leaderTable.append(leaderTableRow)
+}
 
 
 // ---------------- RENDER USER STATS ---------------------------
 
+let renderStats = () => {
+  fetchStats()
+}
 
+let fetchStats = () => {
+  fetch(`http://localhost:3000/users/${currentUser.id}/stats`)
+  .then(res => res.json())
+  .then((statObjArr) => {
+    statObjArr.forEach((statObj) => {
+      statsHTML(statObj)
+    })
+  })
+}
 
+let statsHTML = (statObj) => {
+  let statsTableRow = document.createElement("tr")
 
+  let gameName = document.createElement("td")
+  gameName.innerText = statObj.game_name
 
+  let playsTotal = document.createElement("td")
+  playsTotal.innerText = statObj.total_games
 
+  let winsTotal = document.createElement("td")
+  winsTotal.innerText = statObj.total_wins
+
+  statsTableRow.append(gameName, playsTotal, winsTotal)
+
+  statsTable.append(statsTableRow)
+}
 
 
 
 // -------------- RENDER GAME LEADERBOARD ------------------
 
+let renderGameLeaders = (game) => {
+  gameLeaderTable.innerHTML = ""
 
+  let gameLeadersTitle = document.createElement("h2")
+  gameLeadersTitle.innerText = `Top Players: ${game.name}`
+  gameLeadersTitle.className = "title"
+  gameLeaderBoard.prepend(gameLeadersTitle) 
 
+  gameLeaderHeaders()
 
+  gameLeaderfetch(game)
+}
 
+let gameLeaderHeaders = () => {
+  let tableHeaderRow = document.createElement("tr")
 
+  let placeHeader = document.createElement("th")
+  placeHeader.innerText = "Place"
 
+  let playerHeader = document.createElement("th")
+  playerHeader.innerText = "Player"
 
+  let winsHeader = document.createElement("th")
+  winsHeader.innerText = "Wins"
+
+  tableHeaderRow.append(placeHeader, playerHeader, winsHeader)
+
+  gameLeaderTable.append(tableHeaderRow)
+}
+
+let gameLeaderfetch = (game) => {
+  fetch(`http://localhost:3000/games/${game.id}/top_players`)
+  .then(res => res.json())
+  .then((gameLeadersArr) => {
+    gameLeaders = gameLeadersArr
+    gameLeaders.forEach((gLObj) => {
+      gameLeadersHTML(gLObj)
+    })
+  })
+}
+
+let gameLeadersHTML = (gLObj) => {
+  let gameLeaderRow = document.createElement("tr")
+  
+  let userPlace = document.createElement("td")
+  userPlace.innerText = gameLeaders.indexOf(gLObj) + 1
+
+  let userName = document.createElement("td")
+  userName.innerText = gLObj.user
+
+  let userWins = document.createElement("td")
+  userWins.innerText = gLObj.wins
+
+  gameLeaderRow.append(userPlace, userName, userWins)
+
+  gameLeaderTable.append(gameLeaderRow)
+}
 
 // ------------- RENDER USER FAVORITES --------------------------
 
-
+// click add to your favorites, create a new fave and change button to say remove from favorites
+// view your favorites is a toggle to just display the favorite games
 
 
 
