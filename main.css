@@ -133,3 +133,32 @@ div.escape-container {
   align-items: center;
   justify-content: center;
 }
+
+/* leaderboard */
+
+div.leaderboard {
+  display: none; 
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* user stats */
+
+div.user-stats {
+  display: none; 
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* game leaderboard */
+
+div.game-leaderboard {
+  display: none; 
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* favorites  -- will look like game cards */
