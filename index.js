@@ -153,6 +153,7 @@ let renderSidebar = (userObj) => {
 
   let userWelcome = document.createElement("h2")
   userWelcome.innerText = `Welcome, ${userObj.name}`
+  userWelcome.id = "current-user"
 
   let statsButton = document.createElement("button")
   statsButton.innerText = "View Your Stats"
@@ -216,28 +217,6 @@ let renderSidebar = (userObj) => {
 
     nameChangeForm.style.display = "flex"
     gameContainer.append(nameChangeForm)
-
-    nameChangeForm.addEventListener("submit", (evt) => {
-      evt.preventDefault()
-
-      fetch(`http://localhost:3000/users/${currentUser.id}`, {
-        method: "PATCH",
-        headers: {
-          "content-type": "application/json"
-        },
-        body: JSON.stringify({
-          newName: evt.target["new-name"].value
-        })
-      })
-      .then(res => res.json())
-      .then((userObj) => {
-        currentUser = userObj
-        evt.target.reset()
-      })
-      gameContainer.innerHTML = ""
-      userWelcome.innerText = `Welcome, ${userObj.name}`
-      gamesFetch()
-    })
   })
 
   logoutButton.addEventListener("click", (evt) => {
@@ -276,7 +255,6 @@ let gamesFetch = () => {
 }
 
 let renderGameCards = () => {
-  console.log("run")
   gameArr.forEach((gameObj) => {
     gameCardsHTML(gameObj)
   })
@@ -517,6 +495,29 @@ let favoritesFetch = () => {
 
 
 // ------------ name change -----------------------------
+
+nameChangeForm.addEventListener("submit", (evt) => {
+  evt.preventDefault()
+
+  fetch(`http://localhost:3000/users/${currentUser.id}`, {
+    method: "PATCH",
+    headers: {
+      "content-type": "application/json"
+    },
+    body: JSON.stringify({
+      newName: evt.target["new-name"].value
+    })
+  })
+  .then(res => res.json())
+  .then((userObj) => {
+    currentUser = userObj
+    evt.target.reset()
+    let user = document.querySelector("#current-user")
+    user.innerText  = `Welcome, ${currentUser.name}`
+    gameContainer.innerHTML = ""
+    renderGameCards()
+  })
+})
 
 // ------- TIC TAC TOE ------------------------------
 
