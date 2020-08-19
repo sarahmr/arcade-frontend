@@ -10,6 +10,7 @@ let sidebar = document.querySelector(".sidebar")
 let gameContainer = document.querySelector(".game-container")
 let gameArr = []
 let currentUser = {}
+let allFavesArr = []
 
 let leaderBoard = document.querySelector(".leaderboard")
 let leadersArr =[]
@@ -21,8 +22,6 @@ let statsTable = document.querySelector(".stats-table")
 let gameLeaderBoard = document.querySelector(".game-leaderboard")
 let gameLeaderTable = document.querySelector(".game-leaders")
 let gameLeaders = []
-
-let favoritesDisplay = document.querySelector(".favorites")
 
 let block = document.querySelectorAll(".block")
 let userToken = "O"
@@ -38,6 +37,8 @@ let userGuess = document.querySelector(".user-guess")
 let sharkGameDisplay = document.querySelector(".shark-game-display")
 let escapeName = document.querySelector(".escape-name")
 let escapeContainer = document.querySelector(".escape-container")
+
+let nameChangeForm = document.querySelector(".name-change")
 
 // ---------------- LOG IN VIEW -------------------------
 
@@ -75,6 +76,7 @@ loginButton.addEventListener("click", (evt) => {
       if (user.id) {
         currentUser = user
         renderSidebar(user)
+        favoritesFetch()
         gamesFetch()
       } else {
         buttonArea.innerHTML = ""
@@ -120,8 +122,11 @@ registerButton.addEventListener("click", (evt) => {
     })
     .then(res => res.json())
     .then((user) => {
+      
       if (user.id) {
+        currentUser = user
         renderSidebar(user)
+        favoritesFetch()
         gamesFetch()
       } 
       // else {
@@ -147,7 +152,7 @@ let renderSidebar = (userObj) => {
   appName.innerText = "Arcade"
 
   let userWelcome = document.createElement("h2")
-  userWelcome.innerText = `Welcome ${userObj.name}`
+  userWelcome.innerText = `Welcome, ${userObj.name}`
 
   let statsButton = document.createElement("button")
   statsButton.innerText = "View Your Stats"
@@ -158,10 +163,16 @@ let renderSidebar = (userObj) => {
   let favoritesButton = document.createElement("button")
   favoritesButton.innerText = "Your Favorites"
 
+  let changeNameButton = document.createElement("button")
+  changeNameButton.innerText = "Change Name"
+
   let logoutButton = document.createElement("button")
   logoutButton.innerText = "Log Out"
 
-  sidebar.append(appName, userWelcome, statsButton, leaderboardButton, favoritesButton, logoutButton)
+  let deleteAccountButton = document.createElement("button")
+  deleteAccountButton.innerText = "Delete Account"
+
+  sidebar.append(appName, userWelcome, statsButton, leaderboardButton, favoritesButton, changeNameButton, logoutButton, deleteAccountButton)
 
   leaderboardButton.addEventListener("click", (evt) => {
     gameContainer.innerHTML = ""
@@ -189,6 +200,67 @@ let renderSidebar = (userObj) => {
     userStats.style.display = "flex"
     renderStats()
   })
+
+  favoritesButton.addEventListener("click", (evt) => {
+    gameContainer.innerHTML = ""
+
+    gameArr.forEach((game) => {
+      if (allFavesArr.find((fave) => { return fave.game_id === game.id && fave.user_id === currentUser.id })) {
+        gameCardsHTML(game)
+      }
+    })
+  })
+
+  changeNameButton.addEventListener("click", (evt) => {
+    gameContainer.innerHTML = ""
+
+    nameChangeForm.style.display = "flex"
+    gameContainer.append(nameChangeForm)
+
+    nameChangeForm.addEventListener("submit", (evt) => {
+      evt.preventDefault()
+
+      fetch(`http://localhost:3000/users/${currentUser.id}`, {
+        method: "PATCH",
+        headers: {
+          "content-type": "application/json"
+        },
+        body: JSON.stringify({
+          newName: evt.target["new-name"].value
+        })
+      })
+      .then(res => res.json())
+      .then((userObj) => {
+        currentUser = userObj
+        evt.target.reset()
+      })
+      gameContainer.innerHTML = ""
+      userWelcome.innerText = `Welcome, ${userObj.name}`
+      gamesFetch()
+    })
+  })
+
+  logoutButton.addEventListener("click", (evt) => {
+    sidebar.innerHTML = ""
+    gameContainer.innerHTML = ""
+    currentUser = {}
+    loginView.style.display = "flex"
+  })
+
+  deleteAccountButton.addEventListener("click", (evt) => {
+    // delete in memory, delete from database
+    fetch(`http://localhost:3000/users/${currentUser.id}`, {
+      method: "DELETE"
+    })
+    .then(res => res.json())
+    .then((userObj) => {
+      currentUser = {}
+      console.log(userObj)
+      sidebar.innerHTML = ""
+      gameContainer.innerHTML = ""
+      loginView.style.display = "flex"
+    })
+  })
 }
 
 
@@ -204,6 +276,7 @@ let gamesFetch = () => {
 }
 
 let renderGameCards = () => {
+  console.log("run")
   gameArr.forEach((gameObj) => {
     gameCardsHTML(gameObj)
   })
@@ -226,11 +299,17 @@ let gameCardsHTML = (gameObj) => {
 
   let gameLeaderboardButton = document.createElement("button")
   gameLeaderboardButton.innerText = "View Top Players"
-  playButton.id = `leader-${gameObj.name.split(" ")[0]}`
+  gameLeaderboardButton.id = `leader-${gameObj.name.split(" ")[0]}`
 
   let faveGameButton = document.createElement("button")
-  faveGameButton.innerText = "Add to Your Favorites"
-  playButton.id = `fave-${gameObj.name.split(" ")[0]}`
+
+  if (allFavesArr.filter((fave) => { return currentUser.id === fave.user_id && fave.game_id === gameObj.id }).length > 0) {
+    faveGameButton.innerText = "Remove from Your Favorites"
+  } else {
+    faveGameButton.innerText = "Add to Your Favorites"
+  }
+
+  faveGameButton.id = `fave-${gameObj.name.split(" ")[0]}`
 
   gameCard.append(gameName, gameImage, playButton, gameLeaderboardButton, faveGameButton)
 
@@ -258,6 +337,42 @@ let gameCardsHTML = (gameObj) => {
     gameContainer.append(gameLeaderBoard)
     renderGameLeaders(game)
     gameLeaderBoard.style.display = "flex"
+  })
+
+  faveGameButton.addEventListener("click", (evt) => {
+    if (faveGameButton.innerText === "Add to Your Favorites") {
+
+      fetch("http://localhost:3000/favorites", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json"
+        },
+        body: JSON.stringify({
+          user_id: currentUser.id,
+          game_id: game.id
+        })
+      })
+      .then(res => res.json())
+      .then((faveObj) => {
+        allFavesArr.push(faveObj)
+      })
+
+      faveGameButton.innerText = "Remove from Your Favorites"
+    } else {
+      let faveid = allFavesArr.find((fave) => { return currentUser.id === fave.user_id && fave.game_id === game.id }).id
+
+      fetch(`http://localhost:3000/favorites/${faveid}`, {
+        method: "DELETE"
+      })
+      .then(res => res.json())
+      .then((obj) => {
+        allFavesArr = allFavesArr.filter((fave) => { return fave.id !== obj.id} )
+      })
+
+      faveGameButton.innerText = "Add to Your Favorites"
+    }
+
+
   })
 }
 
@@ -329,8 +444,6 @@ let statsHTML = (statObj) => {
   statsTable.append(statsTableRow)
 }
 
-
-
 // -------------- RENDER GAME LEADERBOARD ------------------
 
 let renderGameLeaders = (game) => {
@@ -393,14 +506,17 @@ let gameLeadersHTML = (gLObj) => {
 
 // ------------- RENDER USER FAVORITES --------------------------
 
-// click add to your favorites, create a new fave and change button to say remove from favorites
-// view your favorites is a toggle to just display the favorite games
+let favoritesFetch = () => {
+  fetch(`http://localhost:3000/favorites`)
+  .then(res => res.json())
+  .then((faveObjArr) => {
+    console.log(faveObjArr)
+    allFavesArr = faveObjArr
+  })
+}
 
 
-
-
-
-
+// ------------ name change -----------------------------
 
 // ------- TIC TAC TOE ------------------------------
 

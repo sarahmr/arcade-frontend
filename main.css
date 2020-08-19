@@ -161,4 +161,11 @@ div.game-leaderboard {
   justify-content: center;
 }
 
-/* favorites  -- will look like game cards */
+/* name change form */
+
+div.name-change {
+  display: none; 
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
