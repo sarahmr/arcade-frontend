@@ -10,6 +10,7 @@ button {
   background: rgb(39, 166, 216);
   border: solid black 1px;
   border-radius: 10px;
+  cursor: pointer;
 }
 
 /* tic tac toe */
