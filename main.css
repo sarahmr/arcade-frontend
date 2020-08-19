@@ -1,12 +1,29 @@
+body {
+  background: lightgoldenrodyellow;
+  margin: 10px;
+}
+
+button {
+  margin: 10px;
+  padding: 10px;
+  color: white;
+  background: rgb(39, 166, 216);
+  border: solid black 1px;
+  border-radius: 10px;
+}
+
 /* tic tac toe */
 
 div.ttt-container {
   /* display: flex; */
   display: none;
-  min-height: 100vh;
+  min-height: 90vh;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: center;  background: lightgoldenrodyellow;
+  border: solid;
+  border-radius: 10px;
+  min-width: 90vh;
 }
 
 .ttt-game-area {
@@ -60,7 +77,6 @@ div.button-area, div.button-area form {
   flex-direction: column;
 }
 
-
 /* main container */
 
 /* set up container to take up maximum of available not viewport height */
@@ -69,10 +85,9 @@ div.main-container {
   display: none;
   grid-template-columns: 1fr 3fr;
   grid-template-rows: 1fr;
-  grid-template-areas: "sidebar main main main";
+  grid-template-areas: "sidebar main";
   grid-gap: 10px;
-
-  height: 100vh;
+  height: calc(100vh - 20px);
 }
 
 /* game cards */
@@ -84,6 +99,7 @@ div.game-container {
   justify-content: center;
   border: 3px solid black;
   border-radius: 10px;
+  background: lightcoral;
 }
 
 .card {
@@ -98,6 +114,7 @@ div.game-container {
   justify-content: space-evenly;
   margin: 1rem 2rem;
   box-shadow: 3px 4px darkslategrey;
+  background: lightgoldenrodyellow;
 }
 
 div.card img {
@@ -116,22 +133,27 @@ div.sidebar {
   flex-direction: column;
   border: 3px solid black;
   border-radius: 10px;
+  background: lightblue;
 }
 
-div.sidebar button {
+/* div.sidebar button {
   padding: 2px;
   margin: 2px;
-}
+} */
 
 /* escape */
 
 div.escape-container {
   /* display: flex; */
   display: none;
-  min-height: 100vh;
+  min-height: 80vh;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  background: lightgoldenrodyellow;
+  border: solid;
+  border-radius: 10px;
+  min-width: 90vh;
 }
 
 /* leaderboard */
@@ -141,6 +163,10 @@ div.leaderboard {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  border: solid;
+  border-radius: 10px;
+  background: lightgoldenrodyellow;
+  padding: 10px;
 }
 
 /* user stats */
@@ -150,6 +176,10 @@ div.user-stats {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  border: solid;
+  border-radius: 10px;
+  background: lightgoldenrodyellow;
+  padding: 10px;
 }
 
 /* game leaderboard */
@@ -159,6 +189,10 @@ div.game-leaderboard {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  border: solid;
+  border-radius: 10px;
+  background: lightgoldenrodyellow;
+  padding: 10px;
 }
 
 /* name change form */
@@ -168,4 +202,8 @@ div.name-change {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  border: solid;
+  border-radius: 10px;
+  background: lightgoldenrodyellow;
+  padding: 10px;
 }
