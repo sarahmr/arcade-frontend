@@ -2,87 +2,134 @@
 <html lang="en">
 <head>
   <title>Arcade</title>
-  <script defer src="index.js"></script>
+  <script defer src="src/escape.js"></script>
+  <script defer src="src/gameCard.js"></script>
+  <script defer src="src/leaderboards.js"></script>
+  <script defer src="src/login.js"></script>
+  <script defer src="src/sidebar.js"></script>
+  <script defer src="src/ttt.js"></script>
   <link rel="stylesheet" href="main.css" />
 </head>
 <body>
-    <!-- log in view -->
-  <div class="login-view">
-    <h1 class="first-welcome">Welcome to Arcade</h1>
-    <div class="button-area">
-      <p class="first-welcome">Please sign in or register.</p>
-      <button class="login">Sign In</button>
-      <button class="register">Register</button>
+  <div class="container" >
+      <!-- log in view -->
+    <div class="login-view">
+      <h1 class="first-welcome">Welcome to Arcade</h1>
+      <div class="button-area">
+        <p class="first-welcome">Please sign in or register.</p>
+        <button class="login">Sign In</button>
+        <button class="register">Register</button>
+      </div>
+      <form class="login-form">
+        <label>Please enter your name: </label>
+        <input name="username">
+        <button>Sign In</button>
+      </form>
+      <form class="register-form">
+        <label>Please enter your name: </label>
+        <input name="username">
+        <button>Register</button>
+      </form>
+      <div class="register-error">
+      </div>
     </div>
-  </div>
-  <!-- after log in, main display -->
-  <div class="main-container" >
-    <div class="sidebar">
+    <!-- main display -->
+    <div class="main-container">
+      <div class="sidebar">
+        <h1 class="app-name">Arcade</h1>
+        <h2 class="user-welcome"></h2>
+        <button class="all-games">Games</button>
+        <button class="stats-button">View Your Stats</button>
+        <button class="leaderboard-button">Leaderboard</button>
+        <button class="favorites-button">Your Favorites</button>
+        <button class="settings-button">Settings</button>
+        <button class="log-out-button">Log Out</button>
+      </div>
+      <div class="game-container">
+        <!-- game cards view -->
+        <div class="cards-view">
 
-    </div>
-    <div class="game-container">
+        </div>
+        <!-- leaderboard display -->
+        <div class="leaderboard">
+          <h2>Top Arcade Players</h2>
+          <table class="site-leaders">
+            
+          </table>
+        </div>
+        <!-- user stats -->
+        <div class="user-stats">
+          <h2 class="user-stats-name"></h2>
+          <table class="stats-table">
 
-    </div>
-  </div>
-  <!-- leaderboard display -->
-  <div class="leaderboard">
-    <h2>Top Arcade Players</h2>
-    <table class="site-leaders">
-      <tr>
-        <th>Place</th>
-        <th>Player</th>
-        <th>Wins</th>
-      </tr>
-    </table>
-  </div>
-  <!-- user stats -->
-  <div class="user-stats">
-    <table class="stats-table">
-      <tr>
-        <th>Game</th>
-        <th>Games Played</th>
-        <th>Total Wins</th>
-      </tr>
-    </table>
-  </div>
-  <!-- game leaderboard -->
-  <div class="game-leaderboard">
-    <table class="game-leaders">
-      
-    </table>
-  </div>
-  <!-- change name form -->
-  <div class="name-change">
-    <h2>Change Your Name</h2>
-    <form>
-      <label>Enter new name: </label>
-      <input name="new-name">
-      <button>Submit</button>
-    </form>
-  </div>
-  <!-- tic tac toe setup -->
-  <div class="ttt-container" id="tictactoe">
-    <h1 class="ttt-name">Tic Tac Toe</h1>
-    <div class="ttt-game-area">
-      <div id="block-0" class="block"></div>
-      <div id="block-1" class="block"></div>
-      <div id="block-2" class="block"></div>
-      <div id="block-3" class="block"></div>
-      <div id="block-4" class="block"></div>
-      <div id="block-5" class="block"></div>
-      <div id="block-6" class="block"></div>
-      <div id="block-7" class="block"></div>
-      <div id="block-8" class="block"></div>
-    </div>
-  </div>
-  <!-- hangman setup -->
-  <div class="escape-container" id="escape">
-    <h1 class="escape-name">Escape the Shark! (A Word Game)</h1>
-    <div class="shark-game-display">
-    </div>
-    <div class="word-display">
-    </div>
-    <div class="user-guess">
+          </table>
+        </div>
+        <!-- game leaderboard -->
+        <div class="game-leaderboard">
+          <h2 class="game-table-title"></h2>
+          <table class="game-leaders">
+            
+          </table>
+          <div class="back-button-display">
+            <button class="back-button">Back</button>
+          </div>
+        </div>
+        <!-- settings area -->
+        <div class="settings">
+          <h2>Settings</h2>
+          <div class="name-change">
+            <h4>Change Your Name</h4>
+            <form>
+              <label>Enter new name: </label>
+              <input name="new-name">
+              <button>Submit</button>
+            </form>
+          </div>
+          <div class="delete-area">
+            <h4>Delete Your Account</h4>
+            <button class="delete-button">Delete Account</button>
+          </div>
+        </div>
+        <!-- tic tac toe setup -->
+        <div class="ttt-container" id="tictactoe">
+          <h1 class="ttt-name">Tic Tac Toe</h1>
+          <div class="ttt-game-area">
+            <div id="block-0" class="block"></div>
+            <div id="block-1" class="block"></div>
+            <div id="block-2" class="block"></div>
+            <div id="block-3" class="block"></div>
+            <div id="block-4" class="block"></div>
+            <div id="block-5" class="block"></div>
+            <div id="block-6" class="block"></div>
+            <div id="block-7" class="block"></div>
+            <div id="block-8" class="block"></div>
+          </div>
+          <div class="end-ttt">
+            <h2 class="win-ttt"></h2>
+            <button class="new-ttt-game">Play Again?</button>
+          </div>
+          <div class="back-button-display">
+            <button class="back-button">Back</button>
+          </div>
+        </div>
+        <!-- escape setup -->
+        <div class="escape-container" id="escape">
+          <h1 class="escape-name">Escape the Shark! (A Word Game)</h1>
+          <div class="shark-game-display">
+          </div>
+          <div class="word-display">
+          </div>
+          <div class="user-guess">
+          </div>
+          <div class="end-play-escape">
+            <h2 class="win-escape"></h2>
+            <button class="new-escape-game">Play Again?</button>
+          </div>
+          <div class="back-button-display">
+            <button class="back-button">Back</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </body>
