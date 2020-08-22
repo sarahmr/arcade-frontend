@@ -1,16 +1,241 @@
+@import url('http://fonts.googleapis.com/css?family=Baloo+Tamma+2');
+@import url('http://fonts.googleapis.com/css?family=Noto+Sans');
+@import url('http://fonts.googleapis.com/css?family=Bungee+Shade');
+
 body {
   background: lightgoldenrodyellow;
   margin: 10px;
+  font-family: "Noto Sans";
 }
 
 button {
-  margin: 10px;
-  padding: 10px;
+  margin: 5px;
+  padding: 3px;
   color: white;
   background: rgb(39, 166, 216);
   border: solid black 1px;
   border-radius: 10px;
   cursor: pointer;
+  font-family: "Baloo Tamma 2";
+  font-size: 15px;
+  width: 75%;
+}
+
+table {
+  border-spacing: 4px;
+  width: 75%;
+  text-align: center;
+  padding-bottom: 10px;
+}
+
+
+/* log in page */
+
+div.login-view {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  flex-direction: column;
+  height: calc(100vh - 20px);
+}
+
+div.button-area, div.button-area form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+form.login-form {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+form.register-form {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+div.register-error {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+/* main container */
+
+div.main-container {
+  /* display: grid; */
+  display: none;
+  grid-template-columns: 1fr 3fr;
+  grid-template-rows: 1fr;
+  grid-template-areas: "sidebar main";
+  grid-gap: 10px;
+  height: calc(100vh - 20px);
+}
+
+/* game cards */
+
+div.game-container {
+  display: flex;
+  /* display: none; */
+  grid-area: main;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid black;
+  border-radius: 10px;
+  background: lightcoral;
+}
+
+/* cards view */
+
+.cards-view {
+  display: flex;
+}
+
+.card {
+  display: flex;
+  text-align: center;
+  border: grey solid 1px;
+  border-radius: 10px;
+  padding: 1rem;
+  width: 15rem;
+  height: 25rem;
+  flex-direction: column;
+  justify-content: space-evenly;
+  margin: 1rem 2rem;
+  box-shadow: 3px 4px darkslategrey;
+  background: lightgoldenrodyellow;
+  align-items: center;
+}
+
+div.card img {
+  justify-self: center;
+  width: 100%;
+  height: auto;
+  align-self: center;
+}
+
+div.card img#image-Tic {
+  justify-self: center;
+  width: 50%;
+  height: auto;
+  align-self: center;
+}
+
+/* sidebar */
+
+div.sidebar {
+  display: flex;
+  /* display: none; */
+  grid-area: sidebar;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border: 3px solid black;
+  border-radius: 10px;
+  background: lightblue;
+}
+
+h1.app-name {
+  font-family: 'Bungee Shade';
+  font-size: 40px;
+}
+
+div.back-button-display {
+  display: flex;
+  align-self: center;
+  justify-content: center;
+  width: 20%;
+}
+
+/* leaderboard */
+
+div.leaderboard {
+  display: none; 
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: solid;
+  border-radius: 10px;
+  background: lightgoldenrodyellow;
+  padding: 10px;
+  width: 75%;
+  height: 50%;
+}
+
+/* user stats */
+
+div.user-stats {
+  display: none; 
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: solid;
+  border-radius: 10px;
+  background: lightgoldenrodyellow;
+  padding: 10px;
+  width: 75%;
+  height: 50%;
+}
+
+/* game leaderboard */
+
+div.game-leaderboard {
+  display: none; 
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: solid;
+  border-radius: 10px;
+  background: lightgoldenrodyellow;
+  padding: 10px;
+  width: 75%;
+  height: 50%;
+  text-align: center;
+}
+
+div.settings {
+  display: none; 
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: solid;
+  border-radius: 10px;
+  background: lightgoldenrodyellow;
+  padding: 10px;
+  width: 75%;
+  height: 60%;
+}
+
+/* name change form */
+
+div.name-change {
+  display: flex; 
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: lightgoldenrodyellow;
+}
+
+div.name-change form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+div.delete-area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 /* tic tac toe */
@@ -29,9 +254,10 @@ div.ttt-container {
 
 .ttt-game-area {
   display: grid;
-  width: 300px;
-  height: 300px;
+  width: 312px;
+  height: 312px;
   grid-template-columns: auto auto auto;
+  padding-bottom: 10px;
 }
 
 .block {
@@ -61,86 +287,12 @@ div.ttt-container {
   border-right: none;
 }
 
-/* log in page */
-
-div.login-view {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  flex-direction: column;
-}
-
-div.button-area, div.button-area form {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-}
-
-/* main container */
-
-/* set up container to take up maximum of available not viewport height */
-div.main-container {
-  /* display: grid; */
+.end-ttt {
   display: none;
-  grid-template-columns: 1fr 3fr;
-  grid-template-rows: 1fr;
-  grid-template-areas: "sidebar main";
-  grid-gap: 10px;
-  height: calc(100vh - 20px);
-}
-
-/* game cards */
-
-div.game-container {
-  display: flex;
-  grid-area: main;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  border: 3px solid black;
-  border-radius: 10px;
-  background: lightcoral;
 }
-
-.card {
-  text-align: center;
-  border: grey solid 1px;
-  border-radius: 10px;
-  padding: 1rem;
-  width: 15rem;
-  height: 25rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  margin: 1rem 2rem;
-  box-shadow: 3px 4px darkslategrey;
-  background: lightgoldenrodyellow;
-}
-
-div.card img {
-  justify-self: center;
-  width: 100%;
-  height: auto;
-}
-
-/* sidebar */
-
-div.sidebar {
-  display: flex;
-  grid-area: sidebar;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  border: 3px solid black;
-  border-radius: 10px;
-  background: lightblue;
-}
-
-/* div.sidebar button {
-  padding: 2px;
-  margin: 2px;
-} */
 
 /* escape */
 
@@ -157,54 +309,20 @@ div.escape-container {
   min-width: 90vh;
 }
 
-/* leaderboard */
-
-div.leaderboard {
-  display: none; 
+.end-play-escape {
+  display: none;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border: solid;
-  border-radius: 10px;
-  background: lightgoldenrodyellow;
-  padding: 10px;
 }
 
-/* user stats */
-
-div.user-stats {
-  display: none; 
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border: solid;
-  border-radius: 10px;
-  background: lightgoldenrodyellow;
-  padding: 10px;
+div.user-guess {
+  display: none;
 }
 
-/* game leaderboard */
-
-div.game-leaderboard {
-  display: none; 
-  flex-direction: column;
-  align-items: center;
+div.user-guess form {
+  display: flex;
   justify-content: center;
-  border: solid;
-  border-radius: 10px;
-  background: lightgoldenrodyellow;
-  padding: 10px;
-}
-
-/* name change form */
-
-div.name-change {
-  display: none; 
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  border: solid;
-  border-radius: 10px;
-  background: lightgoldenrodyellow;
-  padding: 10px;
+  flex-direction: column;
 }
