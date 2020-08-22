@@ -54,10 +54,6 @@ let renderGameDisplay = () => {
 let userGuessHTML = (chosenWord, dashes) => {
   userGuess.innerHTML = ""
 
-  let dashes1 = dashes
-
-  let chosenWord1 = chosenWord
-
   let userGuessForm = document.createElement("form")
 
   let userInputLabel = document.createElement("label")
@@ -77,14 +73,15 @@ let userGuessHTML = (chosenWord, dashes) => {
   userGuess.append(userGuessForm)
 
   userGuessForm.addEventListener("submit", (evt) => {
+    debugger
     evt.preventDefault()
 
     let gameId = gameArr.find((g) => {return g.name === escapeName.innerText}).id
 
-    if (strikes > 0 && dashes1.includes("_")) {
+    if (strikes > 0 && dashes.includes("_")) {
       let userInput = evt.target.guess.value
 
-      if ( chosenWord1.toLowerCase().includes(userInput) ) {
+      if ( chosenWord.toLowerCase().includes(userInput) ) {
         let arr = chosenWord.split("")
         let indexArr = []
         arr.forEach((letter, index) => { 
@@ -93,11 +90,11 @@ let userGuessHTML = (chosenWord, dashes) => {
           } 
         })
 
-        let newDashes = dashes1.split(" ")
+        let newDashes = dashes.split(" ")
 
         indexArr.forEach((index) => { newDashes[index] = userInput })
 
-        dashes1 = newDashes.join(" ")
+        dashes = newDashes.join(" ")
       }
       else {
         wrongGuesses.push(` ${userInput}`)
@@ -105,7 +102,7 @@ let userGuessHTML = (chosenWord, dashes) => {
         strikes -= 1
       }
       renderGameDisplay()
-      renderDashes(dashes1)
+      renderDashes(dashes)
       evt.target.reset()
       if (strikes === 0) {
         fetch("http://localhost:3000/play_sessions", {
@@ -126,7 +123,7 @@ let userGuessHTML = (chosenWord, dashes) => {
           endEscapeGameDisplay(message)
 
         })
-      } else if (!dashes1.includes("_")) {
+      } else if (!dashes.includes("_")) {
         fetch("http://localhost:3000/play_sessions", {
           method: "POST",
           headers: {
